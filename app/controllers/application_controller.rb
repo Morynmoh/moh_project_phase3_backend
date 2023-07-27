@@ -123,6 +123,17 @@ class ApplicationController < Sinatra::Base
 
     response = { message: "Category deleted successfully" }.to_json
   end
+
+  put '/expenses/:id' do
+    expense = Expense.find(params[:id])
+      
+    expense.description = params[:description]
+    expense.amount = params[:amount]
+    expense.date =  params[:date]
+    
+    response = { message: "Expense Updated successfully" }.to_json
+    
+  end
 end
     
   
