@@ -13,6 +13,12 @@ class ApplicationController < Sinatra::Base
     users = User.all 
     users.to_json
   end
+  # delete '/users' do
+  #   user = User.all
+  #   user.destroy
+
+  #   response = { message: "User deleted successfully" }.to_json
+  # end
 
   get "/users/:id" do
     user = User.find(params[:id]) 
@@ -37,14 +43,6 @@ class ApplicationController < Sinatra::Base
     categories = Category.all 
     categories.to_json
   end
-  # post "/users" do
-  #       user = User.create(params)
-  #       if user.valid?
-  #         { user: user, message: "User created successfully" }.to_json
-  #       else
-  #         { message: "User creation failed" }.to_json 
-  #       end
-  #     end
 
   post '/register' do
         
@@ -100,6 +98,8 @@ class ApplicationController < Sinatra::Base
     response = { message: "User deleted successfully" }.to_json
   end
 
+ 
+
   post '/categories' do
     # request_payload = JSON.parse(request.body.read) rescue {}
     
@@ -124,16 +124,50 @@ class ApplicationController < Sinatra::Base
     response = { message: "Category deleted successfully" }.to_json
   end
 
-  put '/expenses/:id' do
-    expense = Expense.find(params[:id])
+  # patch '/expenses/:id' do
+  #   expense = Expense.find(params[:id])
       
-    expense.description = params[:description]
-    expense.amount = params[:amount]
-    expense.date =  params[:date]
+  #   expense.description = params[:description]
+  #   expense.amount = params[:amount]
+  #   expense.date =  params[:date]
     
+  #   expense.update
+  #   expense.save
+
+  #   response = { message: "Expense Updated successfully" }.to_json
+    
+  # end
+  patch '/expenses/:id' do
+    expense = Expense.find(params[:id])
+  
+    # Check if the description field is present in the request payload
+    if params[:description]
+      expense.description = params[:description]
+    end
+  
+    # Check if the amount field is present in the request payload
+    if params[:amount]
+      expense.amount = params[:amount]
+    end
+  
+    # Check if the date field is present in the request payload
+    if params[:date]
+      expense.date = params[:date]
+    end
+  
+    # Save the expense
+    expense.save
+  
+    # Return a success message
     response = { message: "Expense Updated successfully" }.to_json
-    
+  
+    # Render the response
+    render json: response
   end
+
+
+
+
 end
     
   
