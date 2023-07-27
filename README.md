@@ -1,139 +1,149 @@
-# Phase 3 Project Guidelines
-Front end - https://transaction-checker.vercel.app/
-Back-End - 
-## Learning Goals
+# Transaction Tracker
 
-- Build a web basic API with Sinatra and Active Record to support a React
-  frontend
+## Project Description
+Transaction Tracker is a web application that allows users to track their expenses and transactions. Users can add new expenses, update existing ones, and delete expenses as needed. The application provides a simple and convenient way to manage and monitor financial transactions.
 
-## Introduction
+### Author
+This project was developed by Maureen Omamo  courtesy of Moringa School. 
 
-Congrats on getting through all the material for Phase 3! Now's the time to put
-it all together and build something from scratch to reinforce what you know and
-expand your horizons.
+Project TM: Rhona Joy and Erick Mong'are
+Thank you and do enjoy.
+I can be reached for further clarification -> `morynmoh@gmail.com`
 
-The focus of this project is **building a Sinatra API backend** that uses
-**Active Record** to access and persist data in a database, which will be used
-by a separate **React frontend** that interacts with the database via the API.
+# Project Setup Instructions
+To set up and run the Transaction Tracker project locally, follow these steps:
 
-## Requirements
+FrontEnd -> `git clone git@github.com:Morynmoh/moh_project_phase3.git`
+BackEnd -> `git clone git@github.com:Morynmoh/moh_project_phase3_backend.git`
+Live Site link: `https://transaction-checker.vercel.app/`
 
-For this project, you must:
+# Change into the project directory:
+`cd transaction-tracker`
 
-- Use Active Record to interact with a database.
-- Have at least two models with a one-to-many relationship.
-- At a minimum, set up the following API routes in Sinatra:
-  - create and read actions for both models
-  - full CRUD capability for one of the models: 
-  The update action should be implemented using a form that is 
-  pre-filled with existing values for the object. On submission of 
-  the form, the object should update. Note: Using a like button or 
-  similar will not meet the update requirement.
-- Build a separate React frontend application that interacts with the API to
-  perform CRUD actions.
-- Implement proper front end state management. You should be updating state using a
-  setState function after receiving your response from a POST, PATCH, or DELETE 
-  request. You should NOT be relying on a GET request to update state. 
-- Use good OO design patterns. You should have separate classes for each of your
-  models, and create instance and class methods as necessary. 
-- Routes in your application (both client side and back end) should follow RESTful
-  conventions.
-- Use your back end optimally. Pass JSON for related associations to the front 
-  end from the back end. You should use active record methods in your controller to grab
-  the needed data from your database and provide as JSON to the front end. You
-  should NOT be relying on filtering front end state or a separate fetch request to
-  retrieve related data.
+# Install the required dependencies:
+`npm install`
+# Start the development server:
+`npm start`
 
-For example, build a todo list application with a React frontend interface and a
-Sinatra backend API, where a user can:
+Open your web browser and navigate to http://localhost:9292 to view the application.
 
-- **Create** a new todo
-- **Read** a list of all todos
-- **Update** an individual todo
-- **Delete** a todo
-
-A `Todo` can be tagged with a `Category`, so that each todo _belongs to_ a
-category and each category _has many_ todos.
-
-## Getting Started
-
-### Backend Setup
-
-This repository has all the starter code needed to get a Sinatra backend up and
-running. [**Fork and clone**][fork link] this repository to get started. Then, run
-`bundle install` to install the gems.
-
-**Important**: Be sure you fork a copy of the repo into your GitHub account
-before cloning it. You can do this by using the link above or by clicking the
-"Octocat" button at the top of this page, then clicking "Fork" in the upper
-right corner of the repo page.
-
+##### Setting Up the Backend with Sinatra
+You can use to get a Sinatra backend up and
+running. 
 [fork link]: https://github.com/learn-co-curriculum/phase-3-sinatra-react-project/fork
 
-The `app/controllers/application_controller.rb` file has an example GET route
-handler. Replace this route with routes for your project.
+# Install Ruby and Sinatra:
+Make sure you have Ruby installed on your system. You can check by running ruby -v in the terminal. If it's not installed, download and install Ruby from the official website (https://www.ruby-lang.org/en/downloads/). 
 
-You can start your server with:
+# Install the Sinatra gem by running gem install sinatra.
+This is after installing Ruby
 
-```console
-$ bundle exec rake server
-```
+# Create a New Project Directory:
+Create a new directory for your Sinatra backend project and navigate to it in the terminal.
 
-This will run your server on port
-[http://localhost:9292](http://localhost:9292).
+# Create Gemfile:
+Inside the project directory, create a file named Gemfile. This file will be used to manage your project's dependencies. Add the following content to it:
+source "https://rubygems.org"
+`gem "sinatra", "~> 2.1"`
+`gem 'pg', '~> 1.5', '>= 1.5.3'`
+`gem 'puma', '~> 6.3'`
+`gem "rack-contrib", "~> 2.3"`
+`gem "rack-cors", "~> 1.1"`
+`gem "activerecord", "~> 6.1"`
+`gem "sinatra-activerecord", "~> 2.0"`
+`gem "rake", "~> 13.0"`
+`gem 'rest-client', '~> 2.1'`
+`gem 'rack', '2.2.3'`
+`gem 'solargraph'`
+`gem "sqlite3", "~> 1.4"`
+`gem "require_all", "~> 3.0"`
 
-### Frontend Setup
+`group :development do`
+  `gem "pry", "~> 0.14.1"`
+  `gem "rerun"`
+`end`
 
-Your backend and your frontend should be in **two different repositories**.
+`group :test do`
+  `gem "database_cleaner", "~> 2.0"`
+  `gem "rack-test", "~> 1.1"`
+  `gem "rspec", "~> 3.10"`
+  `gem "rspec-json_expectations", "~> 2.2"`
+`end`
 
-Create a new repository in a **separate folder** with a React app for your
-frontend. To do this, `cd` out of the backend project directory, and use
-[create-react-app][] to generate the necessary code for your React frontend:
+Then run `bundle install` in the terminal to install the required gems.
 
-```console
-$ npx create-react-app my-app-frontend
-```
+# PostgreSQL Installation
+Using Linux (Ubuntu/Debian)
+1. Install the Package Manager:
+Open a terminal and run the following commands:
 
-After creating the project locally, you should also
-[create a repository on GitHub][create repo] to host your repo and help
-collaborate, if you're working with a partner.
+`sudo apt update`
+`sudo apt install postgresql postgresql-contrib`
 
-### Fetch Example
+2. PostgreSQL Global Development Group's APT Repository (recommended):
+Add the PostgreSQL Global Development Group's APT repository to your system and install PostgreSQL by running the following commands:
+`sudo apt update`
+`sudo apt install postgresql`
 
-Your React app should make fetch requests to your Sinatra backend! Here's an
-example:
+For Windows and macOS versions, refer to the internet documentation.
 
-```js
-fetch("http://localhost:9292/test")
-  .then((r) => r.json())
-  .then((data) => console.log(data));
-```
+3. Start the PostgreSQL Server:
+The installation process typically starts the PostgreSQL server automatically. If not, you can start it manually using the following command:
+`sudo service postgresql start`
 
-## Project Tips
+4. Create a PostgreSQL User and Database:
+By default, PostgreSQL creates a user named "postgres" during installation. You can use this user or create a new one. To create a new user and a database, follow these steps:
 
-- This project is intended to focus more on the backend than the frontend, so
-  try and keep the React side of things relatively simple. Focus on working with
-  Active Record and performing CRUD actions. What are some interesting queries you can write? What kinds of questions can you ask of your data?
-- Once you have a project idea, come up with a domain model and decide what
-  relationships exist between the models in your application. Use a tool like
-  [dbdiagram.io][] to help visualize your models.
-- Decide on your API endpoints. What data should they return? What kind of CRUD
-  action should they perform? What data do they need from the client?
-- Use [Postman][postman download] to test your endpoints.
-- Use `binding.pry` to debug your requests on the server. It's very helpful to use a
-  `binding.pry` in your controller within a route to see what `params` are being
-  sent.
-- Use the [Network Tab in the Dev Tools][network tab] in the frontend to debug
-  your requests.
+Log in as the "postgres" user:
+`sudo -u postgres psql`
 
-## Resources
+Create a new user and database (replace "username" and "database_name" with your desired values):
+`CREATE USER username WITH PASSWORD 'your_password';`
+`CREATE DATABASE database_name OWNER username;`
 
-- [create-react-app][]
-- [dbdiagram.io][]
-- [Postman][postman download]
+Grant necessary privileges to the user (optional):
+`ALTER USER username CREATEDB;`
 
-[create-react-app]: https://create-react-app.dev/docs/getting-started
-[create repo]: https://docs.github.com/en/get-started/quickstart/create-a-repo
-[dbdiagram.io]: https://dbdiagram.io/
-[postman download]: https://www.postman.com/downloads/
-[network tab]: https://developer.chrome.com/docs/devtools/network/
+Exit the PostgreSQL prompt:
+`\q`
+
+5. Configure PostgreSQL Authentication:
+By default, PostgreSQL uses peer authentication on Unix-like systems. You may want to change this to password authentication or use other authentication methods. Update the pg_hba.conf file to configure authentication.
+
+6. Connect to PostgreSQL:
+You can now connect to PostgreSQL using the command-line client "psql" or a graphical client like pgAdmin.
+
+# Create Main App File:
+Create a new file named app.rb in your project directory. This file will serve as the main entry point for your Sinatra application.
+
+# Set Up Basic App Structure:
+
+# Define Model Classes:
+Inside app.rb, define your ActiveRecord model classes representing the database tables. 
+
+# Create Database Tables:
+To create the database tables, you can use ActiveRecord migrations. Create a new directory named db in your project directory. Inside the db directory, create a new file for each table you want to create using migrations. 
+
+Then, run the migration to create the table by running `rake db:migrate` in the terminal.
+
+# Set Up Routes and Controllers:
+Define your API routes and corresponding controllers in app.rb.
+
+# Run the Sinatra App:
+In the terminal, run ruby app.rb to start the Sinatra application. It will run on the default port (4567). You can access your API at http://localhost:4567.
+
+# Test Your API:
+Use tools like ThunderBolt, or Postman, or your frontend application to test your API endpoints and make sure everything is working as expected.
+
+# Deploy your backend to a production server using platforms like Heroku or AWS or Vercel or Netlify.
+
+
+##### Live Site
+You can access the live version of the Transaction Tracker application on GitHub Pages by visiting the following link: `https://transaction-checker.vercel.app/`
+
+##### Copyright and License
+The Transaction Tracker project is licensed under the Moh License. You are free to use, modify, and distribute the code as long as you include the appropriate copyright notice and adhere to the terms of the Moh License.
+
+Please note that the data used in the application is for demonstration purposes only and should not be used for any real financial transactions.
+
+GOD Bless You. Happy Coding!! 
