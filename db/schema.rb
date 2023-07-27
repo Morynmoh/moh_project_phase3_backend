@@ -17,18 +17,16 @@ ActiveRecord::Schema.define(version: 2023_07_26_170617) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
-    t.bigint "user_id"
-    t.bigint "expense_id"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["expense_id"], name: "index_categories_on_expense_id"
-    t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
   create_table "expenses", force: :cascade do |t|
     t.bigint "user_id"
     t.string "description"
     t.date "date"
+    t.integer "category_id"
     t.decimal "amount", precision: 10, scale: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -42,6 +40,4 @@ ActiveRecord::Schema.define(version: 2023_07_26_170617) do
     t.datetime "updated_at"
   end
 
-  add_foreign_key "categories", "expenses"
-  add_foreign_key "categories", "users"
 end

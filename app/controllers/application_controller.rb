@@ -14,6 +14,20 @@ class ApplicationController < Sinatra::Base
     users.to_json
   end
 
+  get "/users/:id" do
+    user = User.find(params[:id]) 
+    user.to_json
+  end
+
+  get "/categories/:id" do
+    category = Category.find(params[:id]) 
+    category.to_json
+  end
+  get "/expenses/:id" do
+    expense = Expense.find(params[:id]) 
+    expense.to_json
+  end
+
   get "/expenses" do
     expenses = Expense.all 
     expenses.to_json
@@ -32,16 +46,14 @@ class ApplicationController < Sinatra::Base
   #       end
   #     end
 
-  post '/signin' do
-    request_payload = JSON.parse(request.body.read)
-    user = User.create(user_name: request_payload['user_name'], password: request_payload['password'])
-      
-    if user.valid?
-      { user: user, message: "User created successfully" }.to_json
-    else
-       { message: "User creation failed" }.to_json
+  post '/register' do
+        
+      user = User.create(
+        user_name: params[:user_name],
+        password: params[:password],
+      )
+      response = { user: user, message: "User created successfully" }.to_json
     end
-  end
 
   post '/login' do
     user_name = params[:user_name]
@@ -50,7 +62,7 @@ class ApplicationController < Sinatra::Base
       
     if user
           # Authentication successful; Redirect to home page
-      redirect '/Home'
+      # redirect '/Home'
     else
           # User not found; Return 404 status and error message
       status 404
@@ -60,75 +72,57 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-      # post '/login' do
-      #   user_name = params[:user_name]
-      #   password = params[:password]
-      #   user = User.find_by(user_name: user_name, password: password)
-      #   if user
-      #     user_name = user.user_name.split(' ').first.capitalize
-      #     response_data = { id: user.id, user_name: user_name }
-      #     response_data.to_json
-      #   else
-      #     status 404
-      #     response_data = { error: 'User not found.' }
-      #     response_data.to_json
-      #   end
-      # end
-
-    # post '/expenses' do
-    #   request_payload = JSON.parse(request.body.read)
-    #   user = User.create(user_name: request_payload['user_name'], password: request_payload['password'])
-    
-    #   if user.valid?
-    #     { user: user, message: "User created successfully" }.to_json
-    #   else
-    #     { message: "User creation failed" }.to_json
-    #   end
-    # end
-
   post '/expenses' do
-    request_payload = JSON.parse(request.body.read)
-    
+        
     expense = Expense.create(
-      description: request_payload['description'],
-      date: request_payload['date'],
-      amount: request_payload['amount']
+      description: params[:description],
+      date: params[:date],
+      amount: params[:amount],
+      user_id: params[:user_id],
+      category_id: params[:category_id]
+
     )
-    
-    if expense.valid?
-      { expense: expense, message: "Expense created successfully" }.to_json
-    else
-      { message: "Expense creation failed" }.to_json
-    end
+    response = { expense: expense, message: "Expense created successfully" }.to_json
   end
 
+
+  delete '/expenses/:id' do
+    expense = Expense.find(params[:id])
+    expense.destroy
+
+    response = { message: "Expense deleted successfully" }.to_json
+  end
+
+  delete '/users/:id' do
+    user = User.find(params[:id])
+    user.destroy
+
+    response = { message: "User deleted successfully" }.to_json
+  end
 
   post '/categories' do
-    request_payload = JSON.parse(request.body.read) rescue {}
-  
+    # request_payload = JSON.parse(request.body.read) rescue {}
+    
     category = Category.create(
-      name: request_payload['name']
+      name: params[:name]
     )
+    response = { category: category, message: "Category created successfully" }.to_json
   
-    if category.valid?
-      { category: category, message: "Category created successfully" }.to_json
-    else
-      { message: "Category creation failed" }.to_json
-    end
   end
-  # post '/categories' do
-  #   request_payload = JSON.parse(request.body.read)
   
-  #   category = Category.create(
-  #     name: request_payload['name']
-  #   )
-  
-  #   if category.valid?
-  #     { category: category, message: "Category created successfully" }.to_json
-  #   else
-  #     { message: "Category creation failed" }.to_json
-  #   end
-  # end
+  delete '/expenses/:id' do
+    expense = Expense.find(params[:id])
+    expense.destroy
+
+    response = { message: "Expense deleted successfully" }.to_json
+  end
+
+  delete '/category/:id' do
+    category = Category.find(params[:id])
+    category.destroy
+
+    response = { message: "Category deleted successfully" }.to_json
+  end
 end
     
   

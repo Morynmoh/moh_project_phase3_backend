@@ -1,5 +1,5 @@
-class Category < ApplicationRecord
+class Category < ActiveRecord::Base
     belongs_to :user
-    belongs_to :expense
-    validates :category, presence: true
+    validates :name, presence: true, uniqueness: true
+
   end
