@@ -60,7 +60,7 @@ class ApplicationController < Sinatra::Base
       
     if user
           # Authentication successful; Redirect to home page
-      # redirect '/Home'
+      redirect '/Home'
     else
           # User not found; Return 404 status and error message
       status 404
