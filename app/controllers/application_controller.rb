@@ -60,7 +60,7 @@ class ApplicationController < Sinatra::Base
       
     if user
           # Authentication successful; Redirect to home page
-      redirect '/Home'
+      # redirect '/Home'
     else
           # User not found; Return 404 status and error message
       status 404
@@ -101,8 +101,7 @@ class ApplicationController < Sinatra::Base
  
 
   post '/categories' do
-    # request_payload = JSON.parse(request.body.read) rescue {}
-    
+        
     category = Category.create(
       name: params[:name]
     )
@@ -140,28 +139,28 @@ class ApplicationController < Sinatra::Base
   patch '/expenses/:id' do
     expense = Expense.find(params[:id])
   
-    # Check if the description field is present in the request payload
+    
     if params[:description]
       expense.description = params[:description]
     end
   
-    # Check if the amount field is present in the request payload
+    
     if params[:amount]
       expense.amount = params[:amount]
     end
   
-    # Check if the date field is present in the request payload
+    
     if params[:date]
       expense.date = params[:date]
     end
   
-    # Save the expense
+    
     expense.save
   
-    # Return a success message
+    
     response = { message: "Expense Updated successfully" }.to_json
   
-    # Render the response
+    
     render json: response
   end
 
